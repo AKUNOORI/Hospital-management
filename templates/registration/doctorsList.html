@@ -1,0 +1,83 @@
+{% extends 'registration/homebase.html' %}
+{% load static %}
+
+{% block content %}
+
+{% comment %} <!DOCTYPE html> {% endcomment %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctors List</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h2>Available Doctors</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Doctor Name</th>
+                <th>Specialization</th>
+                <th>Available Time</th>
+                <th>End Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for doctor in patient %}
+            <tr>
+                <td>{{ doctor.doctorName }}</td>
+                <td>{{ doctor.specialization }}</td>
+                <td>{{ doctor.availableTimeDate }}</td>
+                <td>{{ doctor.endTimeDate }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <button type="button" id="doctors" onclick="getDoctors()">Doctors</button>
+
+    <script src="{% static 'doctorsList.js' %}"></script>
+
+</body>
+</html>
+
+{% endblock content %}
+
+function getDoctors(){
+    fetch('http://localhost:8000/availableDrs/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({  // Convert data to JSON string
+            "disease":"Heart"
+        })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Success:', data.doctors);
+        // Handle success response from the server
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        // Handle error response from the server
+    })
+}

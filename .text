@@ -1,0 +1,18 @@
+# class department(models.Model):
+#     name = models.CharField(max_length=20)
+
+#     def __str__(self):
+#         return self.name
+    
+
+# class employee(models.Model):
+#     name = models.CharField(max_length=20)
+#     age  = models.IntegerField()
+#     department = models.ForeignKey(department, on_delete=models.CASCADE)
+
+#     def __str__(self):
+#         return self.name
+
+# Department is a header table and empolyee is a body table and empoyee have multiple fields in the single department
+# employee.objects.get().department.name => Query
+# department.objects.filter().employee_set.all(), filter() => Reverse manager Query

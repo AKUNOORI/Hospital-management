@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Signup</title>
+</head>
+<body>
+    <h2>Signup</h2>
+    <form id="signupForm" method="POST">
+        {% csrf_token %}
+        <div>
+            <label for="username">User Name:</label>
+            <input type="text" id="username" name="username" required><br>
+        </div>
+        <div>
+            <label for="age">Age:</label>
+            <input type="text" id="age" name="age" required><br>
+        </div>
+        <div>
+            <label for="number">Number:</label>
+            <input type="text" id="number" name="number" required><br>
+        </div>
+        <div>
+            <label for="adhar">Adhar:</label>
+            <input type="text" id="adhar" name="adhar"><br>
+        </div>
+        <div>
+            <label for="gender">Gender:</label>
+            <input type="text" id="gender" name="gender" required><br>
+        </div>
+        <div>
+            <label for="disease">Disease:</label>
+            <input type="text" id="disease" name="disease" required><br>
+        </div>
+        <div>
+            <label for="address">Address:</label>
+            <input type="text" id="address" name="address" required><br>
+        </div>
+        <div>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required><br>
+        </div>
+        <div>
+            <label for="confirm_password">Confirmation Password:</label>
+            <input type="password" id="confirm_password" name="confirm_password" required><br>
+        </div>
+        <input type="submit" value="Signup">
+    </form>
+    
+
+    <script>
+        document.getElementById('signupForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            // Collect form data
+            const formData = {
+                username: document.getElementById('username').value,
+                age: document.getElementById('age').value,
+                number: document.getElementById('number').value,
+                adhar: document.getElementById('adhar').value,
+                gender: document.getElementById('gender').value,
+                disease: document.getElementById('disease').value,
+                address: document.getElementById('address').value,
+                password: document.getElementById('password').value,
+                confirm_password: document.getElementById('confirm_password').value
+            };
+
+            // Send data to the server
+            fetch('http://localhost:8000/patientclick/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Success:', data);
+                // Handle success response from the server
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                // Handle error response from the server
+            });
+        });
+
+        
+    </script>
+   
+
+</body>
+</html>
